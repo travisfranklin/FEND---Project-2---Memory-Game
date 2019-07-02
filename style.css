@@ -108,3 +108,11 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+/*
+ * FX
+ */
+
+.card-hover {
+	filter: brightness (130%);
+}

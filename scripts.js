@@ -18,7 +18,7 @@
 ///////////////////////////////////////
 
 // Variables
-function $(x) {return document.getElementById(x);};
+function $(x) {return document.querySelector(x);};
 const arrayCards = [
   "bell-slash",
   "bell-slash",
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
   init();
 
   // Reset the game when button is clicked
-  document.querySelector("reset").click(resetGameWarning)
+  document.querySelector(".reset").click(resetGameWarning)
   
   ///////////////////////////////////////
   //  1b. Start
@@ -69,42 +69,57 @@ document.addEventListener("DOMContentLoaded", function() {
     createCards();
 
   // Variables for selectors that can only be called after squares are created
-    let card = document.querySelector('.card');
+    let $card = $('.card');
 
   // Enable functionality for square interaction
     hoverCard();
-    card.click(flipCards);
+    $card.click(flipCards);
 
     // Shuffle the icons, then create li items for each
-  function createCards() {
-    cards = shuffle(arrayCards);
-    cards.forEach(function(card) {
-      const li = document.createElement("li");
-      const i = document.createElement("i");
-      li.setAttribute("class", "card ");
-      i.setAttribute("class", "fas fa-" + card);
-      li.appendChild(i);
-      deck.appendChild(li);
-    });
-  };
+    function createCards() {
+      let cards = shuffle(arrayCards);
+      for (let card of cards) {
+        const li = document.createElement("li");
+        const i = document.createElement("i");
+        li.setAttribute("class", "card ");
+        i.setAttribute("class", "fas fa-" + card);
+        li.appendChild(i);
+        $deck.appendChild(li);
+      };
+    };
+
+
+    // function createCards() {
+    //   let cards = shuffle(arrayCards);
+    //   cards.forEach(function($card) {
+    //     const li = document.createElement("li");
+    //     const i = document.createElement("i");
+    //     li.setAttribute("class", "card ");
+    //     i.setAttribute("class", "fas fa-" + $card);
+    //     li.appendChild(i);
+    //     $deck.appendChild(li);
+    //   });
+    // };
+
+
 
   // Function to shuffle deck items
-  function shuffle(array) {
-    var currentIndex = arrayCards.length,
-      temporaryValue,
-      randomIndex;
+    function shuffle(array) {
+      var currentIndex = arrayCards.length,
+        temporaryValue,
+        randomIndex;
 
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
 
-    return array;
+      return array;
+    };
   };
- };
 });
 
 ///////////////////////////////////////
@@ -216,9 +231,8 @@ function flipCard() {
 
 // Styling when hovering over a square that hasn't been flipped
 function hoverCard() {
-  $('.card:not(.open)').hover(function () {
-    $(this).toggleClass('card-hover');  
-  });
+  $('.card:not(.open)').addEventListener( 'mouseover' , function() { $(this).addClass('card-hover') });
+  $('.card:not(.open)').addEventListener( 'mouseout' , function() { $(this).removeClass('card-hover') });
 };
 
 ///////////////////////////////////////
