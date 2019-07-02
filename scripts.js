@@ -40,7 +40,7 @@ let cards = [
 const deck = document.querySelector(".deck");
 let moves = document.querySelector(".moves");
 let movesLabel = document.querySelector(".moves-label");
-let reset = document.querySelector(".fa-redo");
+let reset = document.querySelector(".fa-repeat");
 let timer = document.querySelector(".timer");
 let timerLabel = document.querySelector(".timer-label");
 let flippedCards = [];
@@ -52,22 +52,14 @@ let timeCount = 0;
 // Run after the page has finished loading
 document.addEventListener("DOMContentLoaded", function() {
   // Add cards to the page
-
   // Reset the game when button is clicked
-  // reset.addEventListener('click', function(event) {
-  //   flippedCards = [];
-  //   movesCount = 0;
-  //   paused = false;
-  //   started = false;
-  //   timeCount = 0;
-  // });
 
+  
   ///////////////////////////////////////
   //  1b. Start
   ///////////////////////////////////////
 
   // Call functions to enable game functionality, establish global variables
-
   // Cards need to exist before their classes can be selected
   createCards();
 
@@ -112,17 +104,6 @@ document.addEventListener("DOMContentLoaded", function() {
       deck.appendChild(li);
     });
   }
-  
-  // cards.forEach(function(card) {
-  //   const li = document.createElement("li");
-  //   li.setAttribute("class", "card " + card + " " + i);
-  //   const i = document.createElement("i");
-  //   i.setAttribute("class", "fas fa-" + card);
-  //   li.appendChild(i);
-  //   deck.appendChild(li);
-  // });
-
-  // shuffle(cards);
 });
 ///////////////////////////////////////
 //  1c. Reset
@@ -130,7 +111,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Reset game to initialization state
 
+
+    reset.addEventListener('click', function(event) {
+      if (confirm("Do you really want to reset?")) {
+        txt = "Game reset!";
+        flippedCards = [];
+        movesCount = 0;
+        paused = false;
+        started = false;
+        timeCount = 0;
+      }
+    });
+
 // Modal dialog to confirm reset
+
+
 
 ///////////////////////////////////////
 //  2a. Matching
