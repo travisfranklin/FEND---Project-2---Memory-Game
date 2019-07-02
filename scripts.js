@@ -1,6 +1,6 @@
 //  CONTENTS
 //  1. INITIALIZATION
-//    a. Ready..............Functions to call on document.querySelector(document).ready
+//    a. Ready..............Functions to call on DOMContentLoaded
 //    b. Start..............Functions to start the game
 //    c. Reset..............Reset current game
 //
@@ -18,7 +18,8 @@
 ///////////////////////////////////////
 
 // Variables
-let cards = [
+function $(x) {return document.getElementById(x);};
+const arrayCards = [
   "bell-slash",
   "bell-slash",
   "building",
@@ -36,24 +37,26 @@ let cards = [
   "gem",
   "gem"
 ];
-
-const deck = document.querySelector(".deck");
-let moves = document.querySelector(".moves");
-let movesLabel = document.querySelector(".moves-label");
-let reset = document.querySelector(".fa-repeat");
-let timer = document.querySelector(".timer");
-let timerLabel = document.querySelector(".timer-label");
-let flippedCards = [];
-let movesCount = 0;
-let paused = false;
-let started = false;
-let timeCount = 0;
+let $deck = $('.deck'),
+ $moves = $('.moves'),
+ $movesLabel = $('.moves-label'),
+ $reset = $('.fa-repeat'),
+ $timer = $('.timer'),
+ $timerLabel = $('.timer-label'),
+ flippedCards = [],
+ movesCount = 0,
+ paused = false,
+ started = false,
+ timeCount = 0;
 
 // Run after the page has finished loading
 document.addEventListener("DOMContentLoaded", function() {
-  // Add cards to the page
-  // Reset the game when button is clicked
 
+  // Add cards to the page
+  init();
+
+  // Reset the game when button is clicked
+  document.querySelector("reset").click(resetGameWarning)
   
   ///////////////////////////////////////
   //  1b. Start
@@ -69,15 +72,25 @@ document.addEventListener("DOMContentLoaded", function() {
     let card = document.querySelector('.card');
 
   // Enable functionality for square interaction
-  hoverCard();
-    document.querySelector(card).click(flipCards);
+    hoverCard();
+    card.click(flipCards);
 
-  }
-  // Shuffle the icons, then create li items for each
+    // Shuffle the icons, then create li items for each
+  function createCards() {
+    cards = shuffle(arrayCards);
+    cards.forEach(function(card) {
+      const li = document.createElement("li");
+      const i = document.createElement("i");
+      li.setAttribute("class", "card ");
+      i.setAttribute("class", "fas fa-" + card);
+      li.appendChild(i);
+      deck.appendChild(li);
+    });
+  };
 
   // Function to shuffle deck items
   function shuffle(array) {
-    var currentIndex = cards.length,
+    var currentIndex = arrayCards.length,
       temporaryValue,
       randomIndex;
 
@@ -90,21 +103,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     return array;
-  }
-
-  // Create List Items and add icons to them.
-  function createCards() {
-    cards = shuffle(cards);
-    cards.forEach(function(card) {
-      const li = document.createElement("li");
-      li.setAttribute("class", "card ");
-      const i = document.createElement("i");
-      i.setAttribute("class", "fas fa-" + card);
-      li.appendChild(i);
-      deck.appendChild(li);
-    });
-  }
+  };
+ };
 });
+
 ///////////////////////////////////////
 //  1c. Reset
 ///////////////////////////////////////
@@ -123,19 +125,28 @@ function resetGame() {
 };
 
 
-    reset.addEventListener('click', function(event) {
-      if (confirm("Do you really want to reset?")) {
-        txt = "Game reset!";
-        flippedCards = [];
-        movesCount = 0;
-        paused = false;
-        started = false;
-        timeCount = 0;
-      }
-    });
+    // reset.addEventListener('click', function(event) {
+    //   if (confirm("Do you really want to reset?")) {
+    //     txt = "Game reset!";
+
+    //   }
+    // });
 
 // Modal dialog to confirm reset
+function resetGameWarning() {
+  paused = true;
 
+  confirm ({
+    message: 'are you sure you wish to reset?',
+    callback: function (value) {
+      if (value) {
+        resetGame();
+      } else {
+        paused = false;
+      }
+    }
+  });
+};
 
 
 ///////////////////////////////////////
@@ -143,55 +154,112 @@ function resetGame() {
 ///////////////////////////////////////
 
 //  Check if the two open squares match
+function checkMatch() {
 
-// If the array elements are the same
+  // If the array elements are the same
+  if (flippedCards[0] === flippedCards[1]) {
+    $deck.find('open').removeClass('open show').addClass('match flipped');
+  } else {
+    setTimeout(function() {
+      $deck.find('open').addClass('wrong').removeClass('open show')
+    });
+  };
 
-// Increment move count
+  // Increment move count
+    movesCount++
 
-// If all squares have been matched, win the game
+  // If all squares have been matched, win the game
+  if ($('.match').length === 16) {
+    winGame();
+  };
 
-// Clear temp array
+  // Clear temp array
+  flippedCards = [];
+};
 
 ///////////////////////////////////////
 //  2b. Styling
 ///////////////////////////////////////
 
 // When a square is clicked, do this stuff
+function flipCard() {
 
-// Working with currently clicked square
+  // Define currently clicked square
+  let $this = $(this);
 
-// Traverse DOM element for this square's icon class
+  // Traverse DOM element for this square's icon class
+  let $thisClass = $this[0].firstChild.classList[1];
 
-// Prevent flipping over more than two cards at once
+  // Prevent flipping over more than two cards at once
+  if (f$this.hasClass('open') || $this.hasClass('match') || $('.open').length === 2) {
+    return;
+  };
 
-// Start timer when first square is clicked
+  // Start timer when first square is clicked
+  if (started === false) {
+    startTimer();
+  };
 
-// If the temporary array doesn't yet have two items in it
+  // If the temporary array doesn't yet have two items in it
+  if (arrayCards.length > 2) {
+    $this.addClass('open show flipped');
 
-// Add class of clicked square to the temp array
+  // Add class of clicked square to the temp array
+    flippedCards.push($thisClass);
+  }
 
-// If two squares have been flipped, check to see if they match
+  // If two squares have been flipped, check to see if they match
+  if (flippedCards.length === 2) {
+    checkMatch();
+  };
+};
 
 // Styling when hovering over a square that hasn't been flipped
+function hoverCard() {
+  $('.card:not(.open)').hover(function () {
+    $(this).toggleClass('card-hover');  
+  });
+};
 
 ///////////////////////////////////////
 //  3a. Stars
 ///////////////////////////////////////
 
 // Change solid star icon class to outlined version when a star is removed
+function removeStar() {
+  let $star = $('.fas .fa-star:last');
+  $star.toggleClass('fas far');
 
-// // Get current star count
-// let starCount = document.querySelector('.fas.fa-star').length;
+// Get current star count
+  let starCount = $('.fas.fa-star').length;
+};
 
 // Increment moves
+function moveCounter() {
 
-// Increase move count by one
+  // Increase move count by one
+  movesCount++;
 
-// Grammar check so score doesn't read "1 Moves"
+  // Grammar check so score doesn't read "1 Moves"
+  if (movesCount === 1) {
+    $movesLabel.html('Move');
+  } else {
+    $movesLabel.html('Moves');
+  }
 
-// Star removal when specific move counts are hit
+  // Star removal when specific move counts are hit
+  switch (movesCount) {
+    case 9: 
+      removeStar();
+      break;
+    case 12: 
+      removeStar();
+      break;
+  }
 
-// Update page display of move count
+  // Update page display of move count
+  $moves.html(movesCount);
+};
 
 ///////////////////////////////////////
 //  3b. Timer
