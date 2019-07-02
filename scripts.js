@@ -60,19 +60,19 @@ document.addEventListener("DOMContentLoaded", function() {
   ///////////////////////////////////////
 
   // Call functions to enable game functionality, establish global variables
+  function init() {
+
   // Cards need to exist before their classes can be selected
-  createCards();
+    createCards();
 
   // Variables for selectors that can only be called after squares are created
-  let card = document.querySelector('.card');
+    let card = document.querySelector('.card');
 
   // Enable functionality for square interaction
   hoverCard();
-  document.querySelector(card).click(flipCards);
+    document.querySelector(card).click(flipCards);
 
-  // Properties for "Reset" and "Win" dialog boxes
-
-
+  }
   // Shuffle the icons, then create li items for each
 
   // Function to shuffle deck items
@@ -110,6 +110,17 @@ document.addEventListener("DOMContentLoaded", function() {
 ///////////////////////////////////////
 
 // Reset game to initialization state
+function resetGame() {
+  deck.empty();
+  movesCount = -1;
+  moveCounter();
+  paused = false;
+  timerLabel.html('Seconds');
+  document.querySelector('.far.fa-star').toggleClass('fas far');
+  arrIconsOpen = [];
+  resetTimer();
+  init();
+};
 
 
     reset.addEventListener('click', function(event) {
