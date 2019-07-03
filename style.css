@@ -113,6 +113,6 @@ h1 {
  * FX
  */
 
-.card-hover {
-	filter: brightness (130%);
+.card:not(.open):hover {
+    background: #42545f;
 }

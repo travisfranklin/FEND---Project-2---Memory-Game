@@ -213,16 +213,6 @@ function flipCard() {
   }
 }
 
-// Styling when hovering over a square that hasn't been flipped
-// function hoverCard() {
-//   query(".card:not(.open)").addEventListener("mouseenter", function() {
-//     query(this).addClass("card-hover");
-//   });
-//   query(".card:not(.open)").addEventListener("mouseleave", function() {
-//     query(this).removeClass("card-hover");
-//   });
-// }
-
 ///////////////////////////////////////
 //  3a. Stars
 ///////////////////////////////////////
