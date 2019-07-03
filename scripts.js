@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
   init();
 
   // Reset the game when button is clicked
-  document.querySelector(".reset").click(resetGameWarning);
+  query(".reset").addEventListener( "click" , resetGameWarning);
 
   ///////////////////////////////////////
   //  1b. Start
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Enable functionality for square interaction
     // hoverCard();
-    queryCard.click(flipCards);
+    queryCard.addEventListener( "click" , flipCards);
 
     // Shuffle the icons, then create li items for each
     function createCards() {
