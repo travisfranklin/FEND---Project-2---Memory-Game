@@ -184,7 +184,7 @@ function checkMatch() {
     movesCount++
 
   // If all squares have been matched, win the game
-  if ($('.match').length === 16) {
+  if (query(".match").length === arrayCards.length) {
     winGame();
   };
 
