@@ -18,7 +18,9 @@
 ///////////////////////////////////////
 
 // Variables
-function $(x) {return document.querySelector(x);};
+function query(x) {
+  return document.querySelector(x);
+};
 const arrayCards = [
   "bell-slash",
   "bell-slash",
@@ -37,43 +39,41 @@ const arrayCards = [
   "gem",
   "gem"
 ];
-let $deck = $('.deck'),
- $moves = $('.moves'),
- $movesLabel = $('.moves-label'),
- $reset = $('.fa-repeat'),
- $timer = $('.timer'),
- $timerLabel = $('.timer-label'),
- flippedCards = [],
- movesCount = 0,
- paused = false,
- started = false,
- timeCount = 0;
+let queryDeck = query(".deck"),
+  queryMoves = query(".moves"),
+  queryMovesLabel = query(".moves-label"),
+  queryReset = query(".fa-repeat"),
+  queryTimer = query(".timer"),
+  queryTimerLabel = query(".timer-label"),
+  flippedCards = [],
+  movesCount = 0,
+  paused = false,
+  started = false,
+  timeCount = 0;
 
 // Run after the page has finished loading
 document.addEventListener("DOMContentLoaded", function() {
-
   // Add cards to the page
   init();
 
   // Reset the game when button is clicked
-  document.querySelector(".reset").click(resetGameWarning)
-  
+  document.querySelector(".reset").click(resetGameWarning);
+
   ///////////////////////////////////////
   //  1b. Start
   ///////////////////////////////////////
 
   // Call functions to enable game functionality, establish global variables
   function init() {
-
-  // Cards need to exist before their classes can be selected
+    // Cards need to exist before their classes can be selected
     createCards();
 
-  // Variables for selectors that can only be called after squares are created
-    let $card = $('.card');
+    // Variables for selectors that can only be called after squares are created
+    let queryCard = query(".card");
 
-  // Enable functionality for square interaction
-    hoverCard();
-    $card.click(flipCards);
+    // Enable functionality for square interaction
+    // hoverCard();
+    queryCard.click(flipCards);
 
     // Shuffle the icons, then create li items for each
     function createCards() {
@@ -84,26 +84,11 @@ document.addEventListener("DOMContentLoaded", function() {
         li.setAttribute("class", "card ");
         i.setAttribute("class", "fas fa-" + card);
         li.appendChild(i);
-        $deck.appendChild(li);
-      };
-    };
+        queryDeck.appendChild(li);
+      }
+    }
 
-
-    // function createCards() {
-    //   let cards = shuffle(arrayCards);
-    //   cards.forEach(function($card) {
-    //     const li = document.createElement("li");
-    //     const i = document.createElement("i");
-    //     li.setAttribute("class", "card ");
-    //     i.setAttribute("class", "fas fa-" + $card);
-    //     li.appendChild(i);
-    //     $deck.appendChild(li);
-    //   });
-    // };
-
-
-
-  // Function to shuffle deck items
+    // Function to shuffle deck items
     function shuffle(array) {
       var currentIndex = arrayCards.length,
         temporaryValue,
@@ -118,8 +103,8 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       return array;
-    };
-  };
+    }
+  }
 });
 
 ///////////////////////////////////////
@@ -132,28 +117,20 @@ function resetGame() {
   movesCount = -1;
   moveCounter();
   paused = false;
-  timerLabel.html('Seconds');
-  document.querySelector('.far.fa-star').toggleClass('fas far');
+  timerLabel.html("Seconds");
+  query(".far.fa-star").toggleClass("fas far");
   arrIconsOpen = [];
   resetTimer();
   init();
-};
-
-
-    // reset.addEventListener('click', function(event) {
-    //   if (confirm("Do you really want to reset?")) {
-    //     txt = "Game reset!";
-
-    //   }
-    // });
+}
 
 // Modal dialog to confirm reset
 function resetGameWarning() {
   paused = true;
 
-  confirm ({
-    message: 'are you sure you wish to reset?',
-    callback: function (value) {
+  confirm({
+    message: "are you sure you wish to reset?",
+    callback: function(value) {
       if (value) {
         resetGame();
       } else {
@@ -161,8 +138,7 @@ function resetGameWarning() {
       }
     }
   });
-};
-
+}
 
 ///////////////////////////////////////
 //  2a. Matching
@@ -170,27 +146,32 @@ function resetGameWarning() {
 
 //  Check if the two open squares match
 function checkMatch() {
-
   // If the array elements are the same
   if (flippedCards[0] === flippedCards[1]) {
-    $deck.find('open').removeClass('open show').addClass('match flipped');
+    queryDeck
+      .find("open")
+      .removeClass("open show")
+      .addClass("match flipped");
   } else {
     setTimeout(function() {
-      $deck.find('open').addClass('wrong').removeClass('open show')
+      queryDeck
+        .find("open")
+        .addClass("wrong")
+        .removeClass("open show");
     });
-  };
+  }
 
   // Increment move count
-    movesCount++
+  movesCount++;
 
   // If all squares have been matched, win the game
   if (query(".match").length === arrayCards.length) {
     winGame();
-  };
+  }
 
   // Clear temp array
   flippedCards = [];
-};
+}
 
 ///////////////////////////////////////
 //  2b. Styling
@@ -198,42 +179,49 @@ function checkMatch() {
 
 // When a square is clicked, do this stuff
 function flipCard() {
-
   // Define currently clicked square
-  let $this = $(this);
+  let queryThis = query(this);
 
   // Traverse DOM element for this square's icon class
-  let $thisClass = $this[0].firstChild.classList[1];
+  let queryThisClass = queryThis[0].firstChild.classList[1];
 
   // Prevent flipping over more than two cards at once
-  if (f$this.hasClass('open') || $this.hasClass('match') || $('.open').length === 2) {
+  if (
+    queryThis.hasClass("open") ||
+    queryThis.hasClass("match") ||
+    query(".open").length === 2
+  ) {
     return;
-  };
+  }
 
   // Start timer when first square is clicked
   if (started === false) {
     startTimer();
-  };
+  }
 
   // If the temporary array doesn't yet have two items in it
   if (arrayCards.length > 2) {
-    $this.addClass('open show flipped');
+    queryThis.addClass("open show flipped");
 
-  // Add class of clicked square to the temp array
-    flippedCards.push($thisClass);
+    // Add class of clicked square to the temp array
+    flippedCards.push(queryThisClass);
   }
 
   // If two squares have been flipped, check to see if they match
   if (flippedCards.length === 2) {
     checkMatch();
-  };
-};
+  }
+}
 
 // Styling when hovering over a square that hasn't been flipped
-function hoverCard() {
-  $('.card:not(.open)').addEventListener( 'mouseover' , function() { $(this).addClass('card-hover') });
-  $('.card:not(.open)').addEventListener( 'mouseout' , function() { $(this).removeClass('card-hover') });
-};
+// function hoverCard() {
+//   query(".card:not(.open)").addEventListener("mouseenter", function() {
+//     query(this).addClass("card-hover");
+//   });
+//   query(".card:not(.open)").addEventListener("mouseleave", function() {
+//     query(this).removeClass("card-hover");
+//   });
+// }
 
 ///////////////////////////////////////
 //  3a. Stars
@@ -241,39 +229,38 @@ function hoverCard() {
 
 // Change solid star icon class to outlined version when a star is removed
 function removeStar() {
-  let $star = $('.fas .fa-star:last');
-  $star.toggleClass('fas far');
+  let queryStar = query(".fas .fa-star:last");
+  queryStar.toggleClass("fas far");
 
-// Get current star count
-  let starCount = $('.fas.fa-star').length;
-};
+  // Get current star count
+  let starCount = query(".fas.fa-star").length;
+}
 
 // Increment moves
 function moveCounter() {
-
   // Increase move count by one
   movesCount++;
 
   // Grammar check so score doesn't read "1 Moves"
   if (movesCount === 1) {
-    $movesLabel.html('Move');
+    queryMovesLabel.html("Move");
   } else {
-    $movesLabel.html('Moves');
+    queryMovesLabel.html("Moves");
   }
 
   // Star removal when specific move counts are hit
   switch (movesCount) {
-    case 9: 
+    case 9:
       removeStar();
       break;
-    case 12: 
+    case 12:
       removeStar();
       break;
   }
 
   // Update page display of move count
-  $moves.html(movesCount);
-};
+  queryMoves.html(movesCount);
+}
 
 ///////////////////////////////////////
 //  3b. Timer
