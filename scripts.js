@@ -147,20 +147,20 @@ function resetGame() {
   //       break;
   //   }
   // }
-  queryDeck.firstChild.innerHTML = '';
-  console.log("all list items removed. Starting moveCounter().");
-  moveCounter();
+  queryDeck.innerHTML = '';
+  // console.log("all list items removed. Starting moveCounter().");
+  // moveCounter();
   paused = false;
   console.log("paused = false");
 
   queryTimerLabel.textContent = "Seconds";
   console.log("queryTimerLabel changed to 'seconds'");
 
-  queryStars.classList.toggle(".fa");
+  // queryStars.classList.toggle(".fa");
   flippedCards = [];
   console.log("flippedCards emptied");
-  console.log("starting resetTimer()");
-  resetTimer();
+  // console.log("starting resetTimer()");
+  // resetTimer();
   console.log("starting init()");
   init();
   console.log("resetGame() complete!");
