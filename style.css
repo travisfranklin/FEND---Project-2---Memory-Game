@@ -6,7 +6,7 @@ html {
 *::before,
 *::after {
     box-sizing: inherit;
-    transition: 1s;
+    transition: .3s;
 }
 
 html,
@@ -79,6 +79,12 @@ h1 {
 #deck .card.match {
     cursor: default;
     background: #02ccba;
+    font-size: 33px;
+}
+
+#deck .card.wrong {
+    cursor: default;
+    background: #e13000;
     font-size: 33px;
 }
 

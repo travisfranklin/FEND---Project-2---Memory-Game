@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
   // Start
   //////////////////////////
+  console.log("Init() complete!\n///////////////////////////\n\n");
 
 });
 
@@ -156,7 +157,7 @@ function checkMatch() {
   if (flippedCards[0] === flippedCards[1]) {
     console.log("flippedCards match!");
 
-    for (let i = 0; i <= 2; i++) {
+    for (let i = 0; i < 2; i++) {
       let opened = document.querySelector('.open');
       opened.classList.remove("open", "show");
       opened.classList.add("match", "flipped");
@@ -165,15 +166,12 @@ function checkMatch() {
 
   } else {
     console.log("flippedCards don't match!");
-    setTimeout(function() {
-      for (let i = 0; i <= 1; i++) {
-        let opened = document.querySelector('.open');
-        opened.classList.add("wrong");
-        opened.classList.remove("open","show");
-        console.log("added .wrong || removed .open.show");
-
-      }
-    });
+    for (let i = 0; i < 2; i++) {
+      let opened = document.querySelector('.open');
+      opened.classList.add("wrong");
+      opened.classList.remove("open");
+      console.log("added .wrong || removed .open");
+    }
   }
 
   // Increment move count
@@ -197,10 +195,7 @@ function checkMatch() {
 
 // When a square is clicked, do this stuff
 function flipCard() {
-  // Define currently clicked square
-  // let queryThis = document.querySelectorAll(evt.target);
-
-  // Traverse DOM element for this square's icon class
+  // Traverse DOM element for this card's icon class
   let queryThisClass = event.target.firstChild.classList[1];
   console.log("let queryThisClass = event.target.firstChild.classList[1]; or " + event.target.firstChild.classList[1])
 
@@ -237,10 +232,23 @@ function flipCard() {
   if (flippedCards.length === 2) {
     console.log("two cards have been flipped! starting checkMatch().");
     checkMatch();
+
+    for (let i = 0; i < 2; i++) {
+      if (document.querySelector('.open') != null || document.querySelector('.wrong') != null) { 
+        setTimeout(function(){
+          let wrong = document.querySelector('.wrong');
+          wrong.classList.remove("wrong", "flipped", "show");
+          console.log("removed .wrong.flipped.show");
+        }, 500);
+      }
+    }
+
+    flippedCards = [];
+
   } else {
     console.log("only one card has been flipped!");
   }
-  console.log("flipCard() complete!");
+  console.log("flipCard() complete!\n///////////////////////\n\n");
 }
 
 
