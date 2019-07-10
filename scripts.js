@@ -119,8 +119,8 @@ document.addEventListener("DOMContentLoaded", function() {
 function resetGame() {
   const queryStars = document.querySelectorAll(".fa.fa-star");
   queryDeck.innerHTML = '';
-  // console.log("all list items removed. Starting moveCounter().");
-  // moveCounter();
+  console.log("all list items removed. Starting moveCounter().");
+  moveCounter();
   paused = false;
   console.log("paused = false");
 
@@ -187,7 +187,7 @@ function checkMatch() {
     }
 
     // Increment move count
-    movesCount++;
+    moveCounter();
     console.log("movesCount incremented");
 
 
@@ -264,7 +264,6 @@ function flipCard() {
   console.log("flipCard() complete!\n///////////////////////\n\n");
 }
 
-
 // Stars
 //////////////////////////
 
@@ -285,12 +284,13 @@ function moveCounter() {
   movesCount++;
   console.log("movesCount incremented.");
 
-
   // Grammar check so score doesn't read "1 Moves"
   if (movesCount === 1) {
     queryMovesLabel.textContent = "Move";
+    console.log("'Move' label chosen for grammar!");
   } else {
     queryMovesLabel.textContent = "Moves";
+    console.log("'Moves' label chosen for grammar!");
   }
 
   // Star removal when specific move counts are hit
@@ -304,9 +304,12 @@ function moveCounter() {
       removeStar();
       break;
   }
+  console.log("Star removal switch run!");
 
   // Update page display of move count
   queryMoves.textContent = movesCount;
+  console.log("updated moves number on page!");
+
   console.log("moveCounter() complete!\n///////////////////////////\n\n");
 }
 
