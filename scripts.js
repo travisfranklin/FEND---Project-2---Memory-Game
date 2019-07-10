@@ -30,7 +30,7 @@ const queryTimer = document.getElementById("timer");
 const queryTimerLabel = document.getElementById("timer-label");
   
 let flippedCards = [],
-  movesCount = 0,
+  movesCount = 7,
   paused = false,
   started = false,
   timeCount = 0;
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Reset game to initialization state
 function resetGame() {
-  const queryStars = document.querySelectorAll(".fa.fa-star");
+  let queryStars = document.querySelectorAll(".fa.fa-star");
   queryDeck.innerHTML = '';
   console.log("all list items removed. Starting moveCounter().");
   moveCounter();
@@ -269,8 +269,10 @@ function flipCard() {
 
 // Change solid star icon class to outlined version when a star is removed
 function removeStar() {
-  let queryStar = document.querySelectorAll(".fa .fa-star:last");
-  queryStar[0].classList.toggle("fa far");
+  let queryStar = document.querySelectorAll(".fa-star");
+  queryStar = Array.from(queryStar).slice(-1)[0];
+  queryStar.classList.toggle("fa-star");
+  queryStar.classList.toggle("fa-star-o");
 
   // Get current star count
   let starCount = document.querySelectorAll(".fa.fa-star").length;
