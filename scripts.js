@@ -5,22 +5,22 @@
 // Variables
 
 const arrayCards = [
-  "bell-slash",
-  "bell-slash",
+  "sign-language",
+  "sign-language",
   "building",
   "building",
   "compass",
   "compass",
-  "sun",
-  "sun",
-  "snowflake",
-  "snowflake",
+  "sun-o",
+  "sun-o",
+  "ship",
+  "ship",
   "bell",
   "bell",
-  "dot-circle",
-  "dot-circle",
-  "gem",
-  "gem"
+  "ra",
+  "ra",
+  "modx",
+  "modx"
 ];
 const queryDeck = document.getElementById("deck");
 const queryMoves = document.getElementById("moves");
@@ -35,9 +35,9 @@ let flippedCards = [],
   started = false,
   timeCount = 0;
 
+
 // Call functions to enable game functionality, establish global variables
 function init() {
-
   
   // Cards need to exist before their classes can be selected
   console.log("Starting createCards()!");
@@ -46,14 +46,6 @@ function init() {
   // Variables for selectors that can only be called after squares are created
   let queryCard = document.querySelectorAll(".card");
 
-  // Enable functionality for square interaction
-  console.log("adding card click event listener");
-  document.body.addEventListener('click', function (event) {
-    if (event.target.classList.contains('card')) {
-      console.log("Card clicked! starting flipCard().");
-      flipCard()
-    }
-  }, false);
 
   // Create cards & Shuffle the icons
   function createCards() {
@@ -85,11 +77,20 @@ function init() {
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-    console.log("shuffle() Complete!");
+    console.log("shuffle() complete!\n///////////////////////////\n\n");
     return array;
   }
-console.log("init() complete!");
+console.log("init() complete!\n///////////////////////////\n\n");
 }
+
+// Enable functionality for square interaction
+console.log("adding card click event listener");
+document.body.addEventListener('click', function (event) {
+  if (event.target.classList.contains('card')) {
+    console.log("Card clicked! starting flipCard().");
+    flipCard()
+  }
+}, false);
 
 // Run after the page has finished loading
 document.addEventListener("DOMContentLoaded", function() {
@@ -131,9 +132,19 @@ function resetGame() {
   console.log("flippedCards emptied");
   // console.log("starting resetTimer()");
   // resetTimer();
+
+  // removes old event listener
+  // document.body.removeEventListener('click', function (event) {
+  //   if (event.target.classList.contains('card')) {
+  //     console.log("Card clicked! starting flipCard().");
+  //     flipCard()
+  //   }
+  // }, false);
+  // console.log("removing old card click event listener")
+
   console.log("starting init()");
   init();
-  console.log("resetGame() complete!");
+  console.log("resetGame() complete!\n///////////////////////////\n\n");
 }
 
 // Confirm reset
@@ -145,7 +156,7 @@ function resetGameWarning() {
   } else {
     paused = false
   }
-  console.log("ResetGameWarning() complete!");
+  console.log("ResetGameWarning() complete!\n///////////////////////////\n\n");
 }
 
 // Matching
@@ -153,41 +164,43 @@ function resetGameWarning() {
 
 //  Check if the two open squares match
 function checkMatch() {
-  // If the array elements are the same
-  if (flippedCards[0] === flippedCards[1]) {
-    console.log("flippedCards match!");
+  // setTimeout(function() {
+    // If the array elements are the same
+    if (flippedCards[0] === flippedCards[1]) {
+      console.log("flippedCards match!");
 
-    for (let i = 0; i < 2; i++) {
-      let opened = document.querySelector('.open');
-      opened.classList.remove("open", "show");
-      opened.classList.add("match", "flipped");
-      console.log("removed .open.show || added .match.flipped");
+      for (let i = 0; i < 2; i++) {
+        let opened = document.querySelector('.open');
+        opened.classList.remove("open", "show");
+        opened.classList.add("match", "flipped");
+        console.log("removed .open.show || added .match.flipped");
+      }
+
+    } else {
+      console.log("flippedCards don't match!");
+      for (let i = 0; i < 2; i++) {
+        let opened = document.querySelector('.open');
+        opened.classList.add("wrong");
+        opened.classList.remove("open");
+        console.log("added .wrong || removed .open");
+      }
     }
 
-  } else {
-    console.log("flippedCards don't match!");
-    for (let i = 0; i < 2; i++) {
-      let opened = document.querySelector('.open');
-      opened.classList.add("wrong");
-      opened.classList.remove("open");
-      console.log("added .wrong || removed .open");
+    // Increment move count
+    movesCount++;
+    console.log("movesCount incremented");
+
+
+    // If all squares have been matched, win the game
+    if (document.getElementsByClassName("match").length === arrayCards.length) {
+      winGame();
     }
-  }
 
-  // Increment move count
-  movesCount++;
-  console.log("movesCount incremented");
-
-
-  // If all squares have been matched, win the game
-  if (document.getElementsByClassName("match").length === arrayCards.length) {
-    winGame();
-  }
-
-  // Clear temp array
-  flippedCards = [];
-  console.log("cleared flippedCards");
-  console.log("checkMatch() Complete!");
+    // Clear temp array
+    flippedCards = [];
+    console.log("cleared flippedCards");
+    console.log("checkMatch() complete!\n///////////////////////////\n\n");
+  // }, 500);
 }
 
 // Styling
@@ -262,7 +275,7 @@ function removeStar() {
 
   // Get current star count
   let starCount = document.querySelectorAll(".fa.fa-star").length;
-  console.log("removeStar() complete!");
+  console.log("removeStar() complete!\n///////////////////////////\n\n");
 
 }
 
@@ -294,7 +307,7 @@ function moveCounter() {
 
   // Update page display of move count
   queryMoves.textContent = movesCount;
-  console.log("moveCounter() complete!");
+  console.log("moveCounter() complete!\n///////////////////////////\n\n");
 }
 
 // Timer
