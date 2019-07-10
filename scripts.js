@@ -28,16 +28,17 @@ const queryMovesLabel = document.getElementById("moves-label");
 const queryReset = document.getElementsByClassName("fa-repeat");
 const queryTimer = document.getElementById("timer");
 const queryTimerLabel = document.getElementById("timer-label");
+
   
-let flippedCards = [],
+ let timecount = 0,
+  flippedCards = [],
   movesCount = 7,
   paused = false,
-  started = false,
-  timeCount = 0;
-
+  started = false;
 
 // Call functions to enable game functionality, establish global variables
 function init() {
+  timeCount = 0;
   
   // Cards need to exist before their classes can be selected
   console.log("Starting createCards()!");
@@ -80,6 +81,9 @@ function init() {
     console.log("shuffle() complete!\n///////////////////////////\n\n");
     return array;
   }
+
+  // clearInterval(secondCounter);
+
 console.log("init() complete!\n///////////////////////////\n\n");
 }
 
@@ -95,20 +99,18 @@ document.body.addEventListener('click', function (event) {
 // Run after the page has finished loading
 document.addEventListener("DOMContentLoaded", function() {
 
-  // Add cards to the page
-  console.log("DOM Content Loaded! Starting Init();");
-  init();
-
   // Reset the game when reset button is clicked
   console.log("setting reset listener");
   const resetListener = document.querySelectorAll(".reset");
   resetListener[0].addEventListener( "click" , resetGameWarning);
 
+  // Add cards to the page
+  console.log("DOM Content Loaded! Starting Init();");
+  init();
+
   
   // Start
   //////////////////////////
-  console.log("Init() complete!\n///////////////////////////\n\n");
-
 });
 
 
@@ -119,28 +121,20 @@ document.addEventListener("DOMContentLoaded", function() {
 function resetGame() {
   let queryStars = document.querySelectorAll(".fa.fa-star");
   queryDeck.innerHTML = '';
-  console.log("all list items removed. Starting moveCounter().");
-  moveCounter();
-  paused = false;
-  console.log("paused = false");
+  console.log("all list items removed.");
+
+  paused = true;
+  started = false;
+  console.log("paused = true || started = false");
 
   queryTimerLabel.textContent = "Seconds";
   console.log("queryTimerLabel changed to 'seconds'");
 
-  // queryStars.classList.toggle(".fa");
   flippedCards = [];
   console.log("flippedCards emptied");
-  // console.log("starting resetTimer()");
-  // resetTimer();
-
-  // removes old event listener
-  // document.body.removeEventListener('click', function (event) {
-  //   if (event.target.classList.contains('card')) {
-  //     console.log("Card clicked! starting flipCard().");
-  //     flipCard()
-  //   }
-  // }, false);
-  // console.log("removing old card click event listener")
+  
+  // Reset the timer
+  timeCount = 0;
 
   console.log("starting init()");
   init();
@@ -224,10 +218,10 @@ function flipCard() {
   }
 
   // Start timer when first square is clicked
-  // if (started === false) {
-  //   console.log("start timer when first square is clicked. starting startTimer().");
-  //   startTimer();
-  // }
+  if (started === false) {
+    console.log("start timer when first square is clicked. starting startTimer().");
+    startTimer();
+  }
 
   // If the temporary array doesn't yet have two items in it
   if (flippedCards.length < 2) {
@@ -319,16 +313,32 @@ function moveCounter() {
 //////////////////////////
 
 // Start the timer
+function startTimer() {
+  started = true;
+  paused = false;
 
 // Increment the counter every second
+// Only increment if the game isn't "paused" (a modal window is open or the first card hasn't yet been turned over)
+  if ((paused === false && started === true) === true) {
+    let secondCounter = setInterval(time, 1000);  
+  } else { clearInterval(secondCounter) }
+}
 
-// Only increment if the game isn't "paused" (a modal window is open)
+function time() {
+    ++timeCount;
 
-// Grammar check so timer doesn't read "1 Seconds"
+  // Grammar check so timer doesn't read "1 Seconds"
+    if (timeCount === 1) {
+      queryTimerLabel.textContent = "Second";
+    } else {
+      queryTimerLabel.textContent = "Seconds";
+    }
 
-// Game has been started
+  // Update page display of seconds count
+      queryTimer.textContent = timeCount;
+  }
 
-// Clear the timer when game is reset
+  
 
 // Win
 //////////////////////////
