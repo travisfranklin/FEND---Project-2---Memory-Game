@@ -3,7 +3,6 @@
 //////////////////////////
 
 // Variables
-
 const arrayCards = [
   "sign-language",
   "sign-language",
@@ -32,7 +31,7 @@ const queryTimerLabel = document.getElementById("timer-label");
   
  let timecount = 0,
   flippedCards = [],
-  movesCount = 7,
+  movesCount = 0,
   paused = false,
   started = false;
 
@@ -119,23 +118,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Reset game to initialization state
 function resetGame() {
-  let queryStars = document.querySelectorAll(".fa.fa-star");
+
+  // Drop the current deck
   queryDeck.innerHTML = '';
   console.log("all list items removed.");
 
+  // Pause the timer
   paused = true;
-  started = false;
   console.log("paused = true || started = false");
 
-  queryTimerLabel.textContent = "Seconds";
-  console.log("queryTimerLabel changed to 'seconds'");
-
+  // Empty array of flipped cards
   flippedCards = [];
   console.log("flippedCards emptied");
   
   // Reset the timer
   timeCount = 0;
 
+  // Reset # of moves
+  movesCount = 0;
+
+  // Count # of moves
+  moveCounter();
+
+  // Create a new deck
   console.log("starting init()");
   init();
   console.log("resetGame() complete!\n///////////////////////////\n\n");
@@ -181,8 +186,12 @@ function checkMatch() {
     }
 
     // Increment move count
+    movesCount++;
+    console.log("movesCount incremented.");
+
+    // Count the moves
     moveCounter();
-    console.log("movesCount incremented");
+    console.log("moveCounter() complete!");
 
 
     // If all squares have been matched, win the game
@@ -261,24 +270,17 @@ function flipCard() {
 // Stars
 //////////////////////////
 
-// Change solid star icon class to outlined version when a star is removed
+// When a star is removed, grab the last solid star icon class from the ul and change it to the outlined version
 function removeStar() {
   let queryStar = document.querySelectorAll(".fa-star");
   queryStar = Array.from(queryStar).slice(-1)[0];
   queryStar.classList.toggle("fa-star");
   queryStar.classList.toggle("fa-star-o");
-
-  // Get current star count
-  let starCount = document.querySelectorAll(".fa.fa-star").length;
   console.log("removeStar() complete!\n///////////////////////////\n\n");
-
 }
 
 // Increment moves
 function moveCounter() {
-  // Increase move count by one
-  movesCount++;
-  console.log("movesCount incremented.");
 
   // Grammar check so score doesn't read "1 Moves"
   if (movesCount === 1) {
@@ -309,6 +311,7 @@ function moveCounter() {
   console.log("moveCounter() complete!\n///////////////////////////\n\n");
 }
 
+
 // Timer
 //////////////////////////
 
@@ -318,10 +321,10 @@ function startTimer() {
   paused = false;
 
 // Increment the counter every second
-// Only increment if the game isn't "paused" (a modal window is open or the first card hasn't yet been turned over)
+// Only increment when the game is started, and check if the game isn't paused 
   if ((paused === false && started === true) === true) {
     let secondCounter = setInterval(time, 1000);  
-  } else { clearInterval(secondCounter) }
+  }
 }
 
 function time() {
@@ -334,20 +337,23 @@ function time() {
       queryTimerLabel.textContent = "Seconds";
     }
 
-  // Update page display of seconds count
+  // Update seconds on page
       queryTimer.textContent = timeCount;
   }
-
-  
 
 // Win
 //////////////////////////
 
 // Modal dialog to announce that game has been won
+function winGame() {
 
-// Pause the timer
+  // Pause the timer
+  paused = true;
 
-// Get star count
-
-// Announcement and option to reset
-// message: 'You win with ' + (3 - document.querySelectorAll('.star').length) + ' or ' + starCount + ' stars',
+  // Announcement and option to reset
+  const winGameConfirm = "You did it! You completed the game in:\n"+movesCount + " moves and " + timeCount + " seconds!\n" + document.querySelectorAll('.star').length + "/3 stars!\n\nWould you like to try again?"
+  if (confirm(winGameConfirm) == true) {
+    console.log("starting resetGame().");
+    resetGame();
+  }
+}
