@@ -346,7 +346,7 @@ function winGame() {
     " moves and " +
     timeCount +
     " seconds!\n" +
-    document.querySelectorAll(".star").length +
+    document.querySelectorAll("#stars").length +
     "/3 stars!\n\nWould you like to try again?";
   if (confirm(winGameConfirm) == true) {
     console.log("starting resetGame().");
