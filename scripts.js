@@ -1,35 +1,33 @@
-
 // Get It Ready
 //////////////////////////
 
 // Variables
 const arrayCards = [
-  "sign-language",
-  "sign-language",
-  "building",
-  "building",
-  "compass",
-  "compass",
-  "sun-o",
-  "sun-o",
-  "ship",
-  "ship",
-  "bell",
-  "bell",
-  "ra",
-  "ra",
-  "modx",
-  "modx"
-];
-const queryDeck = document.getElementById("deck");
-const queryMoves = document.getElementById("moves");
-const queryMovesLabel = document.getElementById("moves-label");
-const queryReset = document.getElementsByClassName("fa-repeat");
-const queryTimer = document.getElementById("timer");
-const queryTimerLabel = document.getElementById("timer-label");
+    "sign-language",
+    "sign-language",
+    "building",
+    "building",
+    "compass",
+    "compass",
+    "sun-o",
+    "sun-o",
+    "ship",
+    "ship",
+    "bell",
+    "bell",
+    "ra",
+    "ra",
+    "modx",
+    "modx"
+  ],
+  queryDeck = document.getElementById("deck"),
+  queryMoves = document.getElementById("moves"),
+  queryMovesLabel = document.getElementById("moves-label"),
+  queryReset = document.getElementsByClassName("fa-repeat"),
+  queryTimer = document.getElementById("timer"),
+  queryTimerLabel = document.getElementById("timer-label");
 
-  
- let timecount = 0,
+let timecount = 0,
   flippedCards = [],
   movesCount = 0,
   paused = false,
@@ -37,22 +35,22 @@ const queryTimerLabel = document.getElementById("timer-label");
 
 // Call functions to enable game functionality, establish global variables
 function init() {
+  // Seconds counter must start at 0
   timeCount = 0;
-  
-  // Cards need to exist before their classes can be selected
+
+  // Make the cards!
   console.log("Starting createCards()!");
   createCards();
 
   // Variables for selectors that can only be called after squares are created
   let queryCard = document.querySelectorAll(".card");
 
-
-  // Create cards & Shuffle the icons
+  // Shuffle the icons, create the cards!
   function createCards() {
     console.log("Running shuffle()!");
     let cards = shuffle(arrayCards);
 
-    // Create li items for each card
+    // Create li(s) for each card, and then insert icons inside them
     for (let card of cards) {
       const li = document.createElement("li");
       const i = document.createElement("i");
@@ -64,7 +62,7 @@ function init() {
     console.log("createCards() completed!");
   }
 
-  // Shuffle deck items
+  // Shuffle deck items (provided by Udacity)
   function shuffle(array) {
     var currentIndex = arrayCards.length,
       temporaryValue,
@@ -81,46 +79,41 @@ function init() {
     return array;
   }
 
-  // clearInterval(secondCounter);
-
-console.log("init() complete!\n///////////////////////////\n\n");
+  console.log("init() complete!\n///////////////////////////\n\n");
 }
 
 // Enable functionality for square interaction
 console.log("adding card click event listener");
-document.body.addEventListener('click', function (event) {
-  if (event.target.classList.contains('card')) {
-    console.log("Card clicked! starting flipCard().");
-    flipCard()
-  }
-}, false);
+document.body.addEventListener(
+  "click",
+  function(event) {
+    if (event.target.classList.contains("card")) {
+      console.log("Card clicked! starting flipCard().");
+      flipCard();
+    }
+  },
+  false
+);
 
 // Run after the page has finished loading
 document.addEventListener("DOMContentLoaded", function() {
-
   // Reset the game when reset button is clicked
   console.log("setting reset listener");
   const resetListener = document.querySelectorAll(".reset");
-  resetListener[0].addEventListener( "click" , resetGameWarning);
+  resetListener[0].addEventListener("click", resetGameWarning);
 
   // Add cards to the page
   console.log("DOM Content Loaded! Starting Init();");
   init();
-
-  
-  // Start
-  //////////////////////////
 });
-
 
 //  Reset
 //////////////////////////
 
-// Reset game to initialization state
+// Reset game to init() state
 function resetGame() {
-
   // Drop the current deck
-  queryDeck.innerHTML = '';
+  queryDeck.innerHTML = "";
   console.log("all list items removed.");
 
   // Pause the timer
@@ -130,7 +123,7 @@ function resetGame() {
   // Empty array of flipped cards
   flippedCards = [];
   console.log("flippedCards emptied");
-  
+
   // Reset the timer
   timeCount = 0;
 
@@ -146,14 +139,14 @@ function resetGame() {
   console.log("resetGame() complete!\n///////////////////////////\n\n");
 }
 
-// Confirm reset
+// Confirm reset dialogue
 function resetGameWarning() {
   paused = true;
   if (confirm("are you sure you wish to reset?") == true) {
     console.log("starting resetGame().");
     resetGame();
   } else {
-    paused = false
+    paused = false;
   }
   console.log("ResetGameWarning() complete!\n///////////////////////////\n\n");
 }
@@ -163,47 +156,46 @@ function resetGameWarning() {
 
 //  Check if the two open squares match
 function checkMatch() {
-  // setTimeout(function() {
-    // If the array elements are the same
-    if (flippedCards[0] === flippedCards[1]) {
-      console.log("flippedCards match!");
+  // If the array elements created from their FA icon classes are the same
+  if (flippedCards[0] === flippedCards[1]) {
+    console.log("flippedCards match!");
 
-      for (let i = 0; i < 2; i++) {
-        let opened = document.querySelector('.open');
-        opened.classList.remove("open", "show");
-        opened.classList.add("match", "flipped");
-        console.log("removed .open.show || added .match.flipped");
-      }
-
-    } else {
-      console.log("flippedCards don't match!");
-      for (let i = 0; i < 2; i++) {
-        let opened = document.querySelector('.open');
-        opened.classList.add("wrong");
-        opened.classList.remove("open");
-        console.log("added .wrong || removed .open");
-      }
+    // Add classes to show that those specific cards match!
+    for (let i = 0; i < 2; i++) {
+      let opened = document.querySelector(".open");
+      opened.classList.remove("open", "show");
+      opened.classList.add("match", "flipped");
+      console.log("removed .open.show || added .match.flipped");
     }
 
-    // Increment move count
-    movesCount++;
-    console.log("movesCount incremented.");
-
-    // Count the moves
-    moveCounter();
-    console.log("moveCounter() complete!");
-
-
-    // If all squares have been matched, win the game
-    if (document.getElementsByClassName("match").length === arrayCards.length) {
-      winGame();
+    // Add classes to show that those specific cards do not match! (removed after short delay)
+  } else {
+    console.log("flippedCards don't match!");
+    for (let i = 0; i < 2; i++) {
+      let opened = document.querySelector(".open");
+      opened.classList.add("wrong");
+      opened.classList.remove("open");
+      console.log("added .wrong || removed .open");
     }
+  }
 
-    // Clear temp array
-    flippedCards = [];
-    console.log("cleared flippedCards");
-    console.log("checkMatch() complete!\n///////////////////////////\n\n");
-  // }, 500);
+  // Increment move count
+  movesCount++;
+  console.log("movesCount incremented.");
+
+  // Count the moves
+  moveCounter();
+  console.log("moveCounter() complete!");
+
+  // If all squares have been matched, win the game
+  if (document.getElementsByClassName("match").length === arrayCards.length) {
+    winGame();
+  }
+
+  // Clear temp array to prep for next move
+  flippedCards = [];
+  console.log("cleared flippedCards");
+  console.log("checkMatch() complete!\n///////////////////////////\n\n");
 }
 
 // Styling
@@ -211,12 +203,14 @@ function checkMatch() {
 
 // When a square is clicked, do this stuff
 function flipCard() {
-  // Traverse DOM element for this card's icon class
+  // Look in DOM for this card's icon class
   let queryThisClass = event.target.firstChild.classList[1];
-  console.log("let queryThisClass = event.target.firstChild.classList[1]; or " + event.target.firstChild.classList[1])
+  console.log(
+    "let queryThisClass = event.target.firstChild.classList[1]; or " +
+      event.target.firstChild.classList[1]
+  );
 
-
-  // Prevent flipping over more than two cards at once
+  // Don't flip over more than two at once
   if (
     event.target.classList.contains("open") ||
     event.target.classList.contains("match") ||
@@ -226,22 +220,20 @@ function flipCard() {
     return;
   }
 
-  // Start timer when first square is clicked
+  // Start the second counter when the first card is clicked
   if (started === false) {
-    console.log("start timer when first square is clicked. starting startTimer().");
+    console.log("Starting startTimer().");
     startTimer();
   }
 
-  // If the temporary array doesn't yet have two items in it
+  // If the temporary array doesn't yet have two items in it, flip the target card
   if (flippedCards.length < 2) {
     event.target.classList.add("open", "show", "flipped");
     console.log("added classes '.open.show.flipped' to clicked card!");
 
-
-  // Add class of clicked square to the temp array
+    // Add the icon class of the clicked card to the temp array
     flippedCards.push(queryThisClass);
     console.log("added " + queryThisClass + " to temp array!");
-
   }
 
   // If two squares have been flipped, check to see if they match
@@ -249,18 +241,19 @@ function flipCard() {
     console.log("two cards have been flipped! starting checkMatch().");
     checkMatch();
 
+    // After brief delay, remove styles from flipped cards that do not match.
     for (let i = 0; i < 2; i++) {
-      if (document.querySelector('.open') != null || document.querySelector('.wrong') != null) { 
-        setTimeout(function(){
-          let wrong = document.querySelector('.wrong');
+      if (
+        document.querySelector(".open") != null ||
+        document.querySelector(".wrong") != null
+      ) {
+        setTimeout(function() {
+          let wrong = document.querySelector(".wrong");
           wrong.classList.remove("wrong", "flipped", "show");
           console.log("removed .wrong.flipped.show");
         }, 500);
       }
     }
-
-    flippedCards = [];
-
   } else {
     console.log("only one card has been flipped!");
   }
@@ -281,7 +274,6 @@ function removeStar() {
 
 // Increment moves
 function moveCounter() {
-
   // Grammar check so score doesn't read "1 Moves"
   if (movesCount === 1) {
     queryMovesLabel.textContent = "Move";
@@ -307,10 +299,8 @@ function moveCounter() {
   // Update page display of move count
   queryMoves.textContent = movesCount;
   console.log("updated moves number on page!");
-
   console.log("moveCounter() complete!\n///////////////////////////\n\n");
 }
-
 
 // Timer
 //////////////////////////
@@ -320,38 +310,44 @@ function startTimer() {
   started = true;
   paused = false;
 
-// Increment the counter every second
-// Only increment when the game is started, and check if the game isn't paused 
+  // Increment the counter every second
+  // Only increment when the game is started, and check if the game isn't paused
   if ((paused === false && started === true) === true) {
-    let secondCounter = setInterval(time, 1000);  
+    let secondCounter = setInterval(time, 1000);
   }
 }
 
 function time() {
-    ++timeCount;
+  ++timeCount;
 
   // Grammar check so timer doesn't read "1 Seconds"
-    if (timeCount === 1) {
-      queryTimerLabel.textContent = "Second";
-    } else {
-      queryTimerLabel.textContent = "Seconds";
-    }
+  if (timeCount === 1) {
+    queryTimerLabel.textContent = "Second";
+  } else {
+    queryTimerLabel.textContent = "Seconds";
+  }
 
   // Update seconds on page
-      queryTimer.textContent = timeCount;
-  }
+  queryTimer.textContent = timeCount;
+}
 
 // Win
 //////////////////////////
 
 // Modal dialog to announce that game has been won
 function winGame() {
-
   // Pause the timer
   paused = true;
 
   // Announcement and option to reset
-  const winGameConfirm = "You did it! You completed the game in:\n"+movesCount + " moves and " + timeCount + " seconds!\n" + document.querySelectorAll('.star').length + "/3 stars!\n\nWould you like to try again?"
+  const winGameConfirm =
+    "You did it! You completed the game in:\n" +
+    movesCount +
+    " moves and " +
+    timeCount +
+    " seconds!\n" +
+    document.querySelectorAll(".star").length +
+    "/3 stars!\n\nWould you like to try again?";
   if (confirm(winGameConfirm) == true) {
     console.log("starting resetGame().");
     resetGame();
