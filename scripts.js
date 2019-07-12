@@ -59,6 +59,15 @@ function init() {
       li.appendChild(i);
       queryDeck.appendChild(li);
     }
+
+    // Stagger card appearance on screen
+    let cardsStagger = document.querySelectorAll(".card");
+    cardsStagger = Array.apply(null, cardsStagger);
+
+    TweenMax.set(cardsStagger, {autoAlpha: 0});
+    cardsStagger.sort(function(){return 0.5-Math.random()});
+    TweenMax.staggerTo(cardsStagger, 0.3, {autoAlpha: 1, ease: Quad.easeInOut}, 0.1);
+
     console.log("createCards() completed!");
   }
 
