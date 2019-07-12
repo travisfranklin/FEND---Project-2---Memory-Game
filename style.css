@@ -1,48 +1,47 @@
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
-    transition: .1s;
+  box-sizing: inherit;
+  transition: 0.1s;
 }
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 .bg {
-	width: 100%;
-	position:fixed;
-	top: -100px;
-	z-index:-9999;
-
+  width: 100%;
+  position: fixed;
+  top: -100px;
+  z-index: -9999;
 }
 
 #container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 h1 {
-	text-align: center;
-    font-family: 'Lato', sans-serif;
-    font-size: 36px;
-    letter-spacing: 5px;
-    color: #2e3d49;
-    margin-top:100px;
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-size: 36px;
+  letter-spacing: 5px;
+  color: #2e3d49;
+  margin-top: 80px;
 }
 
 /*
@@ -50,65 +49,60 @@ h1 {
  */
 
 #deck {
-    width: 560px;
-    min-height: 580px;
-    /*background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);*/
-    padding: 32px;
-    border-radius: 10px;
-    /*box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);*/
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 0 3em;
+  width: 448px;
+  min-height: 464px;
+  padding: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 3em;
 }
 
 #deck .card {
-    height: 60px;
-    width: 60px;
-    margin:20px;
-    background: #2e3d49;
-    font-size: 0;
-    color: #ffffff;
-    border-radius: 800px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 48px;
+  width: 48px;
+  margin: 16px;
+  background: #2e3d49;
+  font-size: 0;
+  color: #ffffff;
+  border-radius: 800px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #deck .card.open {
-    transform: rotateY(0);
-    background: #02b3e4;
-    cursor: default;
+  transform: rotateY(0);
+  background: #02b3e4;
+  cursor: default;
 }
 
 #deck .card.show {
-    font-size: 33px;
+  font-size: 26px;
 }
 
 #deck .card.match {
-    cursor: default;
-    background: #02ccba;
-    font-size: 15px;
-    height:30px;
-    width:30px;
-    margin:35px;
+  cursor: default;
+  background: #02ccba;
+  font-size: 15px;
+  height: 24px;
+  width: 24px;
+  margin: 28px;
 
-    animation:
-    yesyes 0.2s linear;
+  animation: yesyes 0.2s linear;
 }
 
 #deck .card.wrong {
-    cursor: default;
-    background: #e13000;
-    font-size: 33px;
-    animation:
-    nono 0.2s linear infinite;
+  cursor: default;
+  background: #e13000;
+  font-size: 26px;
+  animation: nono 0.2s linear infinite;
 }
 
 #deck .card:not(.open):not(.wrong):not(.match):hover {
-    background: #4f6475;
+  background: #4f6475;
 }
 
 /*
@@ -116,50 +110,41 @@ h1 {
  */
 
 #score-panel {
-	position:absolute;
-    text-align: left;
-    width: 100%;
-    height: 100px;
-    display:flex;
-    justify-content: space-evenly;
-    bottom:0px;
-    background: #2e3d49;
-    padding:7px 0;
+  position: absolute;
+  text-align: left;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-evenly;
+  bottom: 0px;
+  background: #2e3d49;
+  padding: 7px 0;
 }
 
 #score-panel .wrapper {
-    text-align: left;
-    width: 30%;
-    min-width: 350px;
-    display:flex;
-    justify-content: space-evenly;
-    color: white;
+  text-align: left;
+  width: 30%;
+  min-width: 350px;
+  display: flex;
+  justify-content: space-evenly;
+  color: white;
 }
 
 #score-panel #stars {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    margin: 0 5px 0 0;
-    /*width: 80px;*/
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  margin: 0 5px 0 0;
 }
-
-/*#score-panel .Counter {
-    width: 80px;
-}
-
-#score-panel #restart {
-	width: 80px;
-}*/
 
 #score-panel #stars li {
-    list-style: none;
-    display: inline-block;
+  list-style: none;
+  display: inline-block;
 }
 
 #score-panel #restart {
-    float: right;
-    cursor: pointer;
+  float: right;
+  cursor: pointer;
 }
 
 /*
@@ -167,69 +152,66 @@ h1 {
  */
 
 @keyframes nono {
-	0%, 100% {
-		transform: translate(0, 0);
-	}
-  
-	33% {
-    	transform: translate(5px, 0);
-	}
-  
-	66% {
-		transform: translate(-5px, 0);
-  	}
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  33% {
+    transform: translate(5px, 0);
+  }
+
+  66% {
+    transform: translate(-5px, 0);
+  }
 }
 
 @keyframes yesyes {
-	0% {
-		transform: scale(.2,.2);
-	}
+  0% {
+    transform: scale(0.2, 0.2);
+  }
 
-	100% {
-		transform: scale(.5,.5);
-	}
+  100% {
+    transform: scale(0.5, 0.5);
+  }
 }
 
 /*
  * Media Queries
  */
 
- @media screen and (max-width: 600px) {
-	#deck {
-	    width: 350px;
-	    min-height: 370px;
-	    /*background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);*/
-	    padding: 32px;
-	    border-radius: 10px;
-	    /*box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);*/
-	    display: flex;
-	    flex-wrap: wrap;
-	    justify-content: space-between;
-	    align-items: center;
-	    margin: 0 0 3em;
-	}
+@media screen and (max-width: 600px) {
+  #deck {
+    width: 280px;
+    min-height: 296px;
+    padding: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+  }
 
-	#deck .card {
-	    margin: 0px;
+  #deck .card {
+    margin: 0px;
+  }
 
-	}
+  .bg {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    z-index: -9999;
+  }
 
-	.bg {
-		width: 100%;
-		position:fixed;
-		top: 0px;
-		z-index:-9999;
-	}
-
-	#score-panel {
-		position:absolute;
-	    text-align: left;
-	    width: 100%;
-	    height:100px;
-	    display:flex;
-	    justify-content: space-evenly;
-	    bottom:0px;
-	    background: #2e3d49;
-	    padding:7px 0;
-	}
+  #score-panel {
+    position: absolute;
+    text-align: left;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    bottom: 0px;
+    background: #2e3d49;
+    padding: 7px 0;
+  }
 }

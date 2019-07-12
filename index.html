@@ -1,50 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Memory Match || Travis Franklin</title>
-    <meta name="description" content="">
-    <link rel="stylesheet prefetch" href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300&display=swap">  
-    <link type="text/css" rel="stylesheet" href="style.css">
-</head>
-<body>
-	<img class="bg" src="bg.svg">
+    <meta name="description" content="" />
+    <link
+      rel="stylesheet prefetch"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lato:300&display=swap"
+    />
+    <link type="text/css" rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <img class="bg" src="bg.svg" />
     <div id="container">
-        <header>
-            <h1>MEMORY MATCH</h1>
-        </header>
-
-        <section id="score-panel">
-        	<div class="wrapper">
-	        	<ul id="stars">
-	        		<li id="star1"><i class="fa fa-star"></i></li>
-	        		<li id="star2"><i class="fa fa-star"></i></li>
-	        		<li id="star3"><i class="fa fa-star"></i></li>
-	        	</ul>
-
-				<div class="Counter">
-		        	<span id="moves">0</span> <span id="moves-label">Moves</span>
-		        </div>
-
-				<div class="Counter">
-		        	<span id="timer">0</span> <span id="timer-label">Seconds</span>
-		        </div>
-
-	            <div id="restart">
-	        		<i class="fa fa-repeat reset"></i>
-	        	</div>
-	        </div>
-			
-
-        </section>
-
-        <ul id="deck">
-
-        </ul>
+      <header>
+        <h1>MEMORY MATCH</h1>
+      </header>
+      <section id="score-panel">
+        <div class="wrapper">
+          <ul id="stars">
+            <li id="star1"><i class="fa fa-star"></i></li>
+            <li id="star2"><i class="fa fa-star"></i></li>
+            <li id="star3"><i class="fa fa-star"></i></li>
+          </ul>
+          <div class="Counter">
+            <span id="moves">0</span> <span id="moves-label">Moves</span>
+          </div>
+          <div class="Counter">
+            <span id="timer">0</span> <span id="timer-label">Seconds</span>
+          </div>
+          <div id="restart">
+            <i class="fa fa-repeat reset"></i>
+          </div>
+        </div>
+      </section>
+      <ul id="deck"></ul>
     </div>
-
     <script src="scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
-</body>
+  </body>
 </html>
