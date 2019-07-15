@@ -241,7 +241,7 @@ function flipCard() {
   }
 
   // Start the second counter when the first card is clicked
-  if (started === false) {
+  if (!started) {
     console.log("Starting startTimer().");
     startTimer();
   }
@@ -346,7 +346,7 @@ function startTimer() {
 
   // Increment the counter every second
   // Only increment when the game is started, and check if the game isn't paused
-  if ((paused === false && started === true) === true) {
+  if (!paused && started) {
     let secondCounter = setInterval(time, 1000);
   }
 }
