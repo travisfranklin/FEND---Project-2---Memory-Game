@@ -45,7 +45,7 @@ function init() {
   console.log("Starting createCards()!");
   createCards();
 
-  // Variables for selectors that can only be called after squares are created
+  // Variables for selectors that can only be called after cards are created
   let queryCard = document.querySelectorAll(".card");
 
   // Shuffle the icons, create the cards!
@@ -98,7 +98,7 @@ function init() {
   console.log("init() complete!\n///////////////////////////\n\n");
 }
 
-// Enable functionality for square interaction
+// Enable functionality for card interaction
 console.log("adding card click event listener");
 document.body.addEventListener(
   "click",
@@ -174,7 +174,7 @@ function resetGameWarning() {
 // Matching
 //////////////////////////
 
-//  Check if the two open squares match
+//  Check if the two open cards match
 function checkMatch() {
   // If the array elements created from their FA icon classes are the same
   if (flippedCards[0] === flippedCards[1]) {
@@ -207,7 +207,7 @@ function checkMatch() {
   moveCounter();
   console.log("moveCounter() complete!");
 
-  // If all squares have been matched, win the game
+  // If all cards have been matched, win the game
   if (document.getElementsByClassName("match").length === arrayCards.length) {
     winGame();
   }
@@ -221,7 +221,7 @@ function checkMatch() {
 // Styling
 //////////////////////////
 
-// When a square is clicked, do this stuff
+// When a card is clicked, do this stuff
 function flipCard() {
   // Look in DOM for this card's icon class
   let queryThisClass = event.target.firstChild.classList[1];
@@ -256,7 +256,7 @@ function flipCard() {
     console.log("added " + queryThisClass + " to temp array!");
   }
 
-  // If two squares have been flipped, check to see if they match
+  // If two cards have been flipped, check to see if they match
   if (flippedCards.length === 2) {
     console.log("two cards have been flipped! starting checkMatch().");
     checkMatch();
@@ -264,8 +264,8 @@ function flipCard() {
     // After brief delay, remove styles from flipped cards that do not match.
     for (let i = 0; i < 2; i++) {
       if (
-        document.querySelector(".open") != null ||
-        document.querySelector(".wrong") != null
+        document.querySelector(".open") !== null ||
+        document.querySelector(".wrong") !== null
       ) {
         setTimeout(function() {
           let wrong = document.querySelector(".wrong");
