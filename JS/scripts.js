@@ -34,8 +34,6 @@ let timecount = 0,
   started = false,
   queryStarsContainer = document.getElementById("stars");
 
-  
-
 // Call functions to enable game functionality, establish global variables
 function init() {
   // Seconds counter must start at 0
@@ -67,9 +65,16 @@ function init() {
     let cardsStagger = document.querySelectorAll(".card");
     cardsStagger = Array.apply(null, cardsStagger);
 
-    TweenMax.set(cardsStagger, {autoAlpha: 0});
-    cardsStagger.sort(function(){return 0.5-Math.random()});
-    TweenMax.staggerTo(cardsStagger, 0.3, {autoAlpha: 1, ease: Quad.easeInOut}, 0.1);
+    TweenMax.set(cardsStagger, { autoAlpha: 0 });
+    cardsStagger.sort(function() {
+      return 0.5 - Math.random();
+    });
+    TweenMax.staggerTo(
+      cardsStagger,
+      0.3,
+      { autoAlpha: 1, ease: Quad.easeInOut },
+      0.1
+    );
 
     console.log("createCards() completed!");
   }
