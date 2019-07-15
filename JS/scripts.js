@@ -102,7 +102,7 @@ function init() {
 console.log("adding card click event listener");
 document.body.addEventListener(
   "click",
-  function(event) {
+  function() {
     if (event.target.classList.contains("card")) {
       console.log("Card clicked! starting flipCard().");
       flipCard();
