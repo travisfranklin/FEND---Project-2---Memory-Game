@@ -31,7 +31,10 @@ let timecount = 0,
   flippedCards = [],
   movesCount = 0,
   paused = false,
-  started = false;
+  started = false,
+  queryStarsContainer = document.getElementById("stars");
+
+  
 
 // Call functions to enable game functionality, establish global variables
 function init() {
@@ -88,6 +91,10 @@ function init() {
     return array;
   }
 
+  // Create the stars in the heavens
+  console.log("Creating Stars");
+  createStars();
+
   console.log("init() complete!\n///////////////////////////\n\n");
 }
 
@@ -141,6 +148,10 @@ function resetGame() {
 
   // Count # of moves
   moveCounter();
+
+  // Remove stars
+  console.log("Running removeAllStars();");
+  removeAllStars();
 
   // Create a new deck
   console.log("starting init()");
@@ -309,6 +320,20 @@ function moveCounter() {
   queryMoves.textContent = movesCount;
   console.log("updated moves number on page!");
   console.log("moveCounter() complete!\n///////////////////////////\n\n");
+}
+
+function removeAllStars() {
+  queryStarsContainer.innerHTML = "";
+}
+
+function createStars() {
+  for (i = 0; i < 3; i++) {
+    const li = document.createElement("li");
+    const i = document.createElement("i");
+    i.setAttribute("class", "fa fa-star");
+    li.appendChild(i);
+    queryStarsContainer.appendChild(li);
+  }
 }
 
 // Timer
